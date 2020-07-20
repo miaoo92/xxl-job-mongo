@@ -4,12 +4,13 @@ import com.avon.rga.core.model.XxlJobLog;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,18 @@ public class XxlJobLogDao extends BaseMongoServiceImpl<XxlJobLog> {
     }
 
     public Map<String, Object> findLogReport(Date from, Date to) {
-        //TODO
-        return Collections.emptyMap();
+        ConditionalOperators.Cond triggerDayCountRunningCond = ConditionalOperators.Cond
+                  .when(new Criteria().andOperator(where("triggerCode").in(0, 200), where("handleCode").is(0))).then(1).otherwise(0);
+        ConditionalOperators.Cond triggerDayCountSucCond = ConditionalOperators.Cond
+                .when(where("handleCode").is(200)).then(1).otherwise(0);
+        Criteria period = where("triggerTime").gt(from).lt(to);
+        Aggregation aggregation = Aggregation.newAggregation(Aggregation.match(period),
+                Aggregation.group("handleCode").count().as("triggerDayCount")
+                        .sum(triggerDayCountRunningCond).as("triggerDayCountRunning")
+                        .sum(triggerDayCountSucCond).as("triggerDayCountSuc")
+        );
+        Map xxlJobLog = mongoTemplate.aggregate(aggregation, "xxlJobLog", Map.class).getUniqueMappedResult();
+        return xxlJobLog;
     }
 
     public List<Long> findClearLogIds(int jobGroup, int jobId, Date clearBeforeTime, int clearBeforeNum, int pagesize) {
@@ -116,10 +127,14 @@ public class XxlJobLogDao extends BaseMongoServiceImpl<XxlJobLog> {
         return (int) deleteResult.getDeletedCount();
     }
 
-    public List<Long> findFailJobLogIds(int pagesize) {
-        //TODO
+    public List<Long> findFailJobLogIds(int pageSize) {
         Criteria criteria = new Criteria().andOperator(where("handleCode").is(0), where("triggerCode").nin(0, 200));
-        return Collections.emptyList();
+        Criteria codeCriteria = new Criteria().andOperator(
+                new Criteria().orOperator(criteria, where("handleCode").is(200)).not(), where("alarmStatus").is(200));
+        Query query = new Query().addCriteria(codeCriteria).limit(pageSize)
+                .with(new Sort(Sort.Direction.ASC, "id"));
+        List<XxlJobLog> xxlJobLogs = super.find(query);
+        return xxlJobLogs.stream().map(XxlJobLog::getId).collect(Collectors.toList());
 
     }
 
@@ -149,7 +164,7 @@ public class XxlJobLogDao extends BaseMongoServiceImpl<XxlJobLog> {
             query.addCriteria(where("triggerTime").gte(triggerTimeStart).lte(triggerTimeEnd));
         } else if (triggerTimeEnd != null) {
             query.addCriteria(where("triggerTime").lte(triggerTimeEnd));
-        } else if (triggerTimeStart != null){
+        } else if (triggerTimeStart != null) {
             query.addCriteria(where("triggerTime").gte(triggerTimeStart));
         }
         if (logStatus == 1) {

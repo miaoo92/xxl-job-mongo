@@ -3,12 +3,14 @@ package com.avon.rga.dao;
 import com.avon.rga.core.model.XxlJobLogReport;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
@@ -38,9 +40,12 @@ public class XxlJobLogReportDao extends BaseMongoServiceImpl<XxlJobLogReport> {
     }
 
     public XxlJobLogReport queryLogReportTotal(){
-        //TODO
-        return null;
-
+        Aggregation aggregation = Aggregation.newAggregation(Aggregation.group("runningCount")
+                .sum("runningCount").as("runningCount")
+                .sum("sucCount").as("sucCount")
+                .sum("failCount").as("failCount"));
+        XxlJobLogReport xxlJobLogReport = mongoTemplate.aggregate(aggregation, "xxlJobLogReport", XxlJobLogReport.class).getUniqueMappedResult();
+        return xxlJobLogReport;
     }
 
 }
