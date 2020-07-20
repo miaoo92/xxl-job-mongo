@@ -11,7 +11,7 @@ import java.util.List;
  * Created by xuxueli on 16/9/30.
  */
 @Data
-@Document(collection = "XxlJobGroup")
+@Document(collection = "xxlJobGroup")
 public class XxlJobGroup {
 
     private int id;
