@@ -1,6 +1,7 @@
-*/.idea/
-.idea/*
-*/target
-/**/target
+.idea
+.classpath
+.project
 *.iml
-*/*.iml
+target/
+.DS_Store
+.gitattributes
