@@ -1,7 +1,9 @@
 package com.avon.rga.admin.dao;
 
 import com.avon.rga.admin.core.model.XxlJobLogGlue;
+import com.avon.rga.admin.service.IdGenerator;
 import com.mongodb.client.result.DeleteResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  */
 @Service
 public class XxlJobLogGlueService extends BaseMongoServiceImpl<XxlJobLogGlue> {
-	
+
 	public int save(XxlJobLogGlue xxlJobLogGlue){
 		return super.save(xxlJobLogGlue);
 	}
@@ -26,7 +28,7 @@ public class XxlJobLogGlueService extends BaseMongoServiceImpl<XxlJobLogGlue> {
 		return super.find(query);
 	}
 
-	public long removeOld(int jobId, int limit){
+	public long removeOld(String jobId, int limit){
 		Query query = new Query(where("jobId").is(jobId));
 		query.limit(limit);
 		List<XxlJobLogGlue> xxlJobLogGlues = super.find(query);

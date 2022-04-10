@@ -88,7 +88,7 @@ public class JobCodeController {
 		xxlJobLogGlueService.save(xxlJobLogGlue);
 
 		// remove code backup more than 30
-		xxlJobLogGlueService.removeOld(exists_jobInfo.getId(), 30);
+		xxlJobLogGlueService.removeOld(String.valueOf(exists_jobInfo.getId()), 30);
 
 		return ReturnT.SUCCESS;
 	}

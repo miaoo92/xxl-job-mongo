@@ -92,7 +92,7 @@ public class JobInfoController {
 	public static void validPermission(HttpServletRequest request, int jobGroup) {
 		XxlJobUser loginUser = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY);
 		if (!loginUser.validPermission(jobGroup)) {
-			throw new RuntimeException(I18nUtil.getString("system_permission_limit") + "[username="+ loginUser.getUsername() +"]");
+			throw new RuntimeException(I18nUtil.getString("system_permission_limit") + "[username="+ loginUser.getEmailAddrTxt() +"]");
 		}
 	}
 	

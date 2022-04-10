@@ -1,8 +1,10 @@
 package com.avon.rga.admin.dao;
 
 import com.avon.rga.admin.core.model.XxlJobRegistry;
+import com.avon.rga.admin.service.IdGenerator;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;

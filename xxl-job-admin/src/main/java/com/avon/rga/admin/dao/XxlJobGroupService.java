@@ -1,8 +1,10 @@
 package com.avon.rga.admin.dao;
 
 import com.avon.rga.admin.core.model.XxlJobGroup;
+import com.avon.rga.admin.service.IdGenerator;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -18,6 +20,9 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 @Service
 public class XxlJobGroupService extends BaseMongoServiceImpl<XxlJobGroup> {
 
+    @Autowired
+    private IdGenerator idGenerator;
+
     public List<XxlJobGroup> findAll() {
         Query query = new Query();
         query.with(Sort.by(Sort.Direction.ASC, "appname"));
@@ -29,6 +34,8 @@ public class XxlJobGroupService extends BaseMongoServiceImpl<XxlJobGroup> {
     }
 
     public int save(XxlJobGroup xxlJobGroup) {
+        Long next = idGenerator.getNext(XxlJobGroup.class);
+        xxlJobGroup.setId(next.intValue());
         return super.save(xxlJobGroup);
     }
 
@@ -59,7 +66,7 @@ public class XxlJobGroupService extends BaseMongoServiceImpl<XxlJobGroup> {
     public int update(XxlJobGroup xxlJobGroup) {
         Query query = new Query(where("id").is(xxlJobGroup.getId()));
         Update update = new Update();
-        update.set("appName", xxlJobGroup.getAppname());
+        update.set("appname", xxlJobGroup.getAppname());
         update.set("title", xxlJobGroup.getTitle());
         update.set("addressType", xxlJobGroup.getAddressType());
         update.set("addressList", xxlJobGroup.getAddressList());

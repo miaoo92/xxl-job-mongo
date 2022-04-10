@@ -1,57 +1,35 @@
 package com.avon.rga.admin.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author xuxueli 2019-05-04 16:43:12
  */
+@Data
+@Document(collection = "user")
 public class XxlJobUser {
-	
-	private int id;
-	private String username;		// 账号
-	private String password;		// 密码
+
+	@Id
+	private String id;
+
+	private String password;
+
+	private String userId;
+
+	private String acctTyp;
+
+	private String emailAddrTxt;
+
 	private int role;				// 角色：0-普通用户、1-管理员
-	private String permission;	// 权限：执行器ID列表，多个逗号分割
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getRole() {
-		return role;
-	}
-
-	public void setRole(int role) {
-		this.role = role;
-	}
-
-	public String getPermission() {
-		return permission;
-	}
-
-	public void setPermission(String permission) {
-		this.permission = permission;
-	}
+	private String permission;	    // 权限：执行器ID列表，多个逗号分割
 
 	// plugin
 	public boolean validPermission(int jobGroup){

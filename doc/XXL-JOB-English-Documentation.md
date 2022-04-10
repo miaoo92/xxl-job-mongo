@@ -470,7 +470,7 @@ The concret content of configuration file as follows:
     ### xxl-job admin address list：xxl-job-admin address list: Multiple addresses are separated by commas,this address is used for "heart beat and register" and "task execution result callback" between the executor and xxl-job-admin.
     xxl.job.admin.addresses=http://127.0.0.1:8080/xxl-job-admin
     
-    ### xxl.job.executor.appname is used to group by executors
+    ### xxl.job.executor.appName is used to group by executors
     xxl.job.executor.appname=xxl-job-executor-sample
     ### xxl.job.executor.ip :1,used to register with xxl-job-admin;2,xxl-job-admin dispatch task to executor through it;3,if it is blank executor will get ip automatically, multi network card need to be configured.
     xxl.job.executor.ip=

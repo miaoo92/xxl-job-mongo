@@ -42,7 +42,7 @@ public class XxlJobUserService extends BaseMongoServiceImpl<XxlJobUser>  {
 	}
 
 	public XxlJobUser loadByUserName(String username) {
-		Query query = new Query(where("username").is(username));
+		Query query = new Query(where("emailAddrTxt").is(username));
 		return super.findOne(query);
 	}
 
@@ -62,7 +62,7 @@ public class XxlJobUserService extends BaseMongoServiceImpl<XxlJobUser>  {
 		return (int) updateResult.getModifiedCount();
 	}
 
-	public int delete(int id) {
+	public int delete(String id) {
 		Query query = new Query(where("id").is(id));
 		DeleteResult remove = super.remove(query);
 		return (int) remove.getDeletedCount();

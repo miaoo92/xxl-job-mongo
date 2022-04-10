@@ -1,7 +1,9 @@
 package com.avon.rga.admin.dao;
 
 import com.avon.rga.admin.core.model.XxlJobLogReport;
+import com.avon.rga.admin.service.IdGenerator;
 import com.mongodb.client.result.UpdateResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Query;

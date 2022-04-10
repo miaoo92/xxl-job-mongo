@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.avon.rga.admin.dao.XxlJobGroupDao">
+<mapper namespace="com.avon.rga.admin.dao.XxlJobGroupService">
 	
 	<resultMap id="XxlJobGroup" type="com.avon.rga.admin.core.model.XxlJobGroup" >
 		<result column="id" property="id" />

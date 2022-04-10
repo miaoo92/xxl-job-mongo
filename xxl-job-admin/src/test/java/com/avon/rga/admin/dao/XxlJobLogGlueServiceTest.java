@@ -28,7 +28,7 @@ public class XxlJobLogGlueServiceTest {
 
         List<XxlJobLogGlue> list = xxlJobLogGlueService.findByJobId(1);
 
-        long ret2 = xxlJobLogGlueService.removeOld(1, 1);
+        long ret2 = xxlJobLogGlueService.removeOld("1", 1);
 
         int ret3 = xxlJobLogGlueService.deleteByJobId(1);
     }

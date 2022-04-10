@@ -1,8 +1,10 @@
 package com.avon.rga.admin.dao;
 
 import com.avon.rga.admin.core.model.XxlJobLog;
+import com.avon.rga.admin.service.IdGenerator;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
@@ -25,6 +27,9 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  */
 @Service
 public class XxlJobLogService extends BaseMongoServiceImpl<XxlJobLog> {
+
+    @Autowired
+    private IdGenerator idGenerator;
 
     private Query pageListQuery(int offset, int pagesize, int jobGroup, int jobId,
                                 Date triggerTimeStart, Date triggerTimeEnd, int logStatus) {
@@ -85,6 +90,8 @@ public class XxlJobLogService extends BaseMongoServiceImpl<XxlJobLog> {
     }
 
     public int save(XxlJobLog xxlJobLog) {
+        Long next = idGenerator.getNext(XxlJobLog.class);
+        xxlJobLog.setId(next);
         return super.save(xxlJobLog);
     }
 
