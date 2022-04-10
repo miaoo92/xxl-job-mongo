@@ -10,7 +10,7 @@ $(function() {
 			type:"post",
 	        data : function ( d ) {
 	        	var obj = {};
-                obj.username = $('#username').val();
+                obj.emailAddrTxt = $('#emailAddrTxt').val();
                 obj.role = $('#role').val();
 	        	obj.start = d.start;
 	        	obj.length = d.length;
@@ -27,7 +27,7 @@ $(function() {
 						"width":'10%'
 					},
 	                {
-	                	"data": 'username',
+	                	"data": 'emailAddrTxt',
 						"visible" : true,
 						"width":'20%'
 					},
@@ -163,7 +163,7 @@ $(function() {
         errorClass : 'help-block',
         focusInvalid : true,  
         rules : {
-            username : {
+            emailAddrTxt : {
 				required : true,
                 rangelength:[4, 20],
                 myValid01: true
@@ -174,7 +174,7 @@ $(function() {
             }
         }, 
         messages : {
-            username : {
+            emailAddrTxt : {
             	required : I18n.system_please_input + I18n.user_username,
                 rangelength: I18n.system_lengh_limit + "[4-20]"
             },
@@ -201,7 +201,7 @@ $(function() {
             });
 
 			var paramData = {
-				"username": $("#addModal .form input[name=username]").val(),
+				"emailAddrTxt": $("#addModal .form input[name=emailAddrTxt]").val(),
                 "password": $("#addModal .form input[name=password]").val(),
                 "role": $("#addModal .form input[name=role]:checked").val(),
                 "permission": permissionArr.join(',')
@@ -252,7 +252,7 @@ $(function() {
 
 		// base data
 		$("#updateModal .form input[name='id']").val( row.id );
-		$("#updateModal .form input[name='username']").val( row.username );
+		$("#updateModal .form input[name='emailAddrTxt']").val( row.emailAddrTxt );
 		$("#updateModal .form input[name='password']").val( '' );
 		$("#updateModal .form input[name='role'][value='"+ row.role +"']").click();
         var permissionArr = [];
@@ -293,7 +293,7 @@ $(function() {
 
             var paramData = {
                 "id": $("#updateModal .form input[name=id]").val(),
-                "username": $("#updateModal .form input[name=username]").val(),
+                "emailAddrTxt": $("#updateModal .form input[name=emailAddrTxt]").val(),
                 "password": $("#updateModal .form input[name=password]").val(),
                 "role": $("#updateModal .form input[name=role]:checked").val(),
                 "permission": permissionArr.join(',')
