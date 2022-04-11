@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AdminBizTest {
 
     // admin-client
-    private static String addressUrl = "http://127.0.0.1:8080/xxl-job-admin/";
+    private static String addressUrl = "http://127.0.0.1:8080/batchjob/";
     private static String accessToken = null;
 
 

@@ -6,7 +6,7 @@
 		<artifactId>xxl-job</artifactId>
 		<version>2.3.0</version>
 	</parent>
-	<artifactId>xxl-job-admin</artifactId>
+	<artifactId>rga-batchjob-service</artifactId>
 	<packaging>jar</packaging>
 	<properties>
 		<spring.version>5.3.3</spring.version>
