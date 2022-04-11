@@ -25,9 +25,7 @@ public class XxlJobGroupService extends BaseMongoServiceImpl<XxlJobGroup> {
 
     public List<XxlJobGroup> findAll() {
         Query query = new Query();
-        query.with(Sort.by(Sort.Direction.ASC, "appname"));
-        query.with(Sort.by(Sort.Direction.ASC, "title"));
-        query.with(Sort.by(Sort.Direction.ASC, "id"));
+        query.with(Sort.by(Sort.Direction.ASC, "appname", "title","id"));
         List<XxlJobGroup> xxlJobGroups = super.find(query);
         return xxlJobGroups;
 
